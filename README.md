@@ -6,11 +6,11 @@ This only allow to replace internet downloaded app
 
 ## To use
 
-Add app to appIcon.json
+## 1.Add app to appIcon.json
 
 ```json
 {
-  "config": {                       # optional
+  "config": { # optional
     "custom_icon_dir": "$HOME/.custom-icons" # Default path
   },
   "app": [
@@ -24,4 +24,9 @@ Add app to appIcon.json
 }
 ```
 
-Then run replace_icons.sh
+2. Then run replace_icons.sh
+
+## Debug
+Log filename: `output.log`
+
+To stream the output, `tail -f output.log`
