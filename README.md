@@ -2,11 +2,11 @@
 
 ## Important note
 
-This only allow to replace internet downloaded app
+This only allow to replace app download from the internet
 
 ## To use
 
-## 1.Add app to appIcon.json
+### 1.Add app to appIcon.json
 
 ```json
 {
@@ -24,7 +24,7 @@ This only allow to replace internet downloaded app
 }
 ```
 
-2. Then run replace_icons.sh
+### 2. Then run replace_icons.sh
 
 ## Debug
 Log filename: `output.log`
