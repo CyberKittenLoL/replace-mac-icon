@@ -17,7 +17,7 @@ test_without_modified_icon=false
 # 1 - Error
 # 2 - Info
 # 3 - Debug
-log_level=2
+log_level=3
 
 log_check_size() {
   local log_size=$(wc -c < "$log_file")
@@ -368,6 +368,7 @@ replace_icon() {
   echo_log "$app_name updated icon successfully." 2
 
   any_changed=$((any_changed + 1))
+  echo_log "any_changed = $any_changed" 3
   return 0
 }
 
@@ -377,7 +378,7 @@ restart_finder() {
 }
 
 main(){
-  jq -c '.apps[]' $1 | while read -r app; do
+  while read -r app; do
     icon_path=$(echo "$app" | jq -r '.icon_path')
     app_path=$(echo "$app" | jq -r '.app_path')
     icon_name=$(echo "$app" | jq -r '.icon_name')
@@ -387,10 +388,12 @@ main(){
       continue
     fi
     replace_icon "$icon_path" "$app_path" "$icon_name"
-  done
+  done < <(jq -c '.apps[]' "$json_file")
+
   end_time=$(date +%s)
   echo "Execution time: $((end_time - start_time)) seconds."
-  if [[ "$any_changed" -eq 0 ]]; then
+  echo_log "any_changed = $any_changed" 3
+  if [[ $any_changed -eq 0 ]]; then
     echo_log "No icons were updated." 2
     return
   else
@@ -446,7 +449,7 @@ init
 if [[ "$run_test" = true ]]; then
   test
 else
-  main "$json_file"
+  main
 fi
 
 echo_log "End of running" -1
